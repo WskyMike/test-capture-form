@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 export default function CaptureForm() {
@@ -66,9 +67,14 @@ export default function CaptureForm() {
   };
 
   // Проверяем наличие тест-токена
-  if (!localStorage.getItem("token")) {
-    localStorage.setItem("token", "mockToken123");
-  }
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        localStorage.setItem("token", "mockToken123");
+      }
+    }
+  }, []);
 
   return (
     <form
